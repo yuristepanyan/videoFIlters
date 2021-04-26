@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * set up RGB SeekBars change logic and accept new filter to the camera
+     * set up Blue to Yellow and Green to Red SeekBars change logic and accept new filter to the camera
      */
     private fun seekListeners() {
         by.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
