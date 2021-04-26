@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.hardware.camera2.params.ColorSpaceTransform
 import android.net.Uri
 import android.opengl.GLSurfaceView
 import android.os.Build
@@ -15,13 +14,11 @@ import android.provider.MediaStore
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import com.daasuu.gpuv.camerarecorder.CameraRecordListener
 import com.daasuu.gpuv.camerarecorder.GPUCameraRecorder
 import com.daasuu.gpuv.camerarecorder.GPUCameraRecorderBuilder
 import com.daasuu.gpuv.camerarecorder.LensFacing
-import com.daasuu.gpuv.egl.filter.GlRGBFilter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,7 +26,6 @@ import java.util.*
 private const val CAMERA_PERMISSION_REQUEST_CODE = 111
 
 class MainActivity : AppCompatActivity() {
-    private val rgbFilter = GlRGBFilter()
     private var sampleGLView: GLSurfaceView? = null
     private var gpuCameraRecorder: GPUCameraRecorder? = null
     private var path = ""
