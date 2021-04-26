@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">VideoFilters</string>
+    <string name="r">R</string>
+    <string name="b">B</string>
+    <string name="g">G</string>
+    <string name="record">Record</string>
+    <string name="stop">Stop</string>
+</resources>
