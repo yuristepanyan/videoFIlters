@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.camera2.params.ColorSpaceTransform
 import android.net.Uri
 import android.opengl.GLSurfaceView
 import android.os.Build
@@ -14,6 +15,7 @@ import android.provider.MediaStore
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import com.daasuu.gpuv.camerarecorder.CameraRecordListener
 import com.daasuu.gpuv.camerarecorder.GPUCameraRecorder
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     private var sampleGLView: GLSurfaceView? = null
     private var gpuCameraRecorder: GPUCameraRecorder? = null
     private var path = ""
+    private var blueYellow = 0.toDouble()
+    private var greenRed = 0.toDouble()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,28 +72,21 @@ class MainActivity : AppCompatActivity() {
      * set up RGB SeekBars change logic and accept new filter to the camera
      */
     private fun seekListeners() {
-        r.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        by.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                rgbFilter.setRed(progress / 100f)
-                gpuCameraRecorder?.setFilter(rgbFilter)
+                val filter = progress - 50.toDouble()
+                blueYellow = 128 * filter / 50
+                gpuCameraRecorder?.setFilter(getRGBFromLab(greenRed, blueYellow))
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
-        g.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        rg.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                rgbFilter.setGreen(progress / 100f)
-                gpuCameraRecorder?.setFilter(rgbFilter)
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
-        b.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                rgbFilter.setBlue(progress / 100f)
-                gpuCameraRecorder?.setFilter(rgbFilter)
+                val filter = progress - 50.toDouble()
+                greenRed = 128 * filter / 50
+                gpuCameraRecorder?.setFilter(getRGBFromLab(greenRed, blueYellow))
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -219,9 +216,9 @@ class MainActivity : AppCompatActivity() {
      */
     private fun getVideoFilePath(): String {
         path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).absolutePath + "/" + SimpleDateFormat(
-                "yyyyMM_dd-HHmmss",
-                Locale.getDefault()
-            ).format(Date()) + ".mp4"
+            "yyyyMM_dd-HHmmss",
+            Locale.getDefault()
+        ).format(Date()) + ".mp4"
         return path
     }
 }

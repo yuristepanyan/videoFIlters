@@ -5,4 +5,6 @@
     <string name="g">G</string>
     <string name="record">Record</string>
     <string name="stop">Stop</string>
+    <string name="blue_yellow">blue - yellow</string>
+    <string name="green_red">green - red</string>
 </resources>
