@@ -8,7 +8,7 @@ import com.daasuu.gpuv.egl.filter.GlRGBFilter
 
 fun getRGBFromLab(a: Double, b: Double): GlRGBFilter {
     val xyz = DoubleArray(3)
-    ColorUtils.LABToXYZ(50.toDouble(), a, b, xyz)
+    ColorUtils.LABToXYZ(100.toDouble(), a, b, xyz)
     val color = ColorUtils.XYZToColor(xyz[0], xyz[1], xyz[2])
 
     return  GlRGBFilter().apply {
